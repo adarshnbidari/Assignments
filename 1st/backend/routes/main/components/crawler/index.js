@@ -8,66 +8,75 @@ const crawler = (url) => {
 
     return new Promise(async (resolve, reject) => {
 
-        var check_url_reference = require('../check_url_reference/index.js');
+        try {
 
-        var url_exists = await check_url_reference(url);
-
-
-        if (!url_exists) {
+            var check_url_reference = require('../check_url_reference/index.js');
 
 
-            request.get(url, (error, response, body) => {
+            var url_exists = await check_url_reference(url);
 
 
-                if (error) reject(error);
 
-                var links = body.match(/href\s*=\s*(['"])(https?:\/\/medium.com.+?)\1/ig);
-
-                if (links == null || links == undefined) {
-
-                    reject({
-
-                        status: 'success',
-                        message: "no more links to show"
-
-                    });
-
-                }
+            if (!url_exists) {
 
 
-                links = links.map(e => e.split("\"")[1]);
+                request.get(url, (error, response, body) => {
+
+                    if (error) reject(error);
+
+                    var links = body.match(/href\s*=\s*(['"])(https?:\/\/medium.com.+?)\1/ig);
 
 
-                links.forEach(e => {
+                    if (links == null || links == undefined) {
 
-                    var info = parse(e);
+                        resolve(false);
 
-                    var kp = getKeyValuePairs(info.query);
+                    } else {
 
-                    captured_urls[e] = {
+                        links = links && links.map(e => e.split("\"")[1]);
 
-                        query_parameters: kp
 
-                    };
+                        links.forEach(e => {
+
+                            var info = parse(e);
+
+                            var kp = getKeyValuePairs(info.query);
+
+                            captured_urls[e] = {
+
+                                query_parameters: kp
+
+                            };
+
+
+                        });
+
+
+                        resolve(captured_urls);
+
+
+                    }
+
+
 
 
                 });
 
 
-                resolve(captured_urls);
+            } else {
 
 
-            });
+                resolve(false);
+
+            }
 
 
-        } else {
 
+        } catch (e) {
 
-            resolve(false);
+            reject(e);
 
         }
-
-
 
 
     });
