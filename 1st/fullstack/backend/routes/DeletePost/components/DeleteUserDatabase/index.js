@@ -28,19 +28,79 @@ const DeleteUserDatabase = (data) => {
 
         }
 
+
         try {
 
-            var deleteUserPost = postModel.findOneAndDelete(
+            var get_parent_id = await postModel.findOne({ post_id: data.post_id });
 
-                {
 
-                    post_id: data.post_id,
-                    username: data.username
+            if (get_parent_id && get_parent_id.post.parent_post_id) {
+
+                var get_parent_data = await postModel.findOne({ post_id: get_parent_id.post.parent_post_id });
+
+                var new_parent_comments = [];
+
+
+                for (let i of get_parent_data.post.comments) {
+
+                    if (i == data.post_id) {
+
+                        continue;
+
+                    }
+
+                    console.log(i);
+
+                    new_parent_comments.push(i);
 
                 }
 
+                var new_parent_post_data = get_parent_data.post;
+                new_parent_post_data.comments = new_parent_comments;
 
-            );
+                await postModel.findOneAndUpdate(
+
+                    {
+
+                        post_id: get_parent_id.post.parent_post_id
+
+                    },
+                    {
+
+                        $set: {
+
+                            post: new_parent_post_data
+
+                        }
+
+                    }
+
+                );
+
+                var delete_reply_post = await postModel.findOneAndDelete({
+
+                    username: data.username,
+                    post_id: data.post_id
+
+                });
+
+                resolve(delete_reply_post);
+
+            } else {
+
+
+                var delete_reply_post = await postModel.findOneAndDelete({
+
+                    username: data.username,
+                    post_id: data.post_id
+
+                });
+
+                resolve(delete_reply_post);
+
+
+            }
+
 
 
         } catch (e) {
@@ -48,9 +108,6 @@ const DeleteUserDatabase = (data) => {
             reject(e);
 
         }
-
-
-        resolve(deleteUserPost);
 
 
     });

@@ -20,7 +20,7 @@ const reply_top_post = (data) => {
                 post_id: { type: String, default: mongoose.Types.ObjectId },
                 username: { type: String },
                 post: { type: Object },
-                main_post: { type: Boolean }
+                main_post: { type: Boolean },
 
             });
 
@@ -43,8 +43,10 @@ const reply_top_post = (data) => {
                 post_message: data.post_message,
                 main_post: false,
                 datetime: require('moment')(),
+                parent_post_id:data.post_id
 
             };
+        
 
             try {
 

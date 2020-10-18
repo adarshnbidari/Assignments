@@ -4,10 +4,24 @@ const express = require('express');
 
 const bodyParser = require('body-parser');
 
-
 const app = express();
 
 app.use(bodyParser.urlencoded({ extended: true }));
+
+if (process.env.NODE_ENV == 'development') { //for developement purposes only :)
+
+    app.use(function (req, res, next) {
+
+        res.header("Access-Control-Allow-Origin", "http://localhost:3001"); //for react 
+        res.header("Access-Control-Allow-Methods", "GET,HEAD,OPTIONS,POST,PUT");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+        res.header("Access-Control-Allow-Credentials", true);
+        next();
+    });
+
+
+}
+
 
 //establish database connection
 const mongoose = require('./databaseOperations/index.js');
