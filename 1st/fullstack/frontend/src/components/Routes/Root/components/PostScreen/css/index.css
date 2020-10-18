@@ -1,0 +1,33 @@
+#post_screen{
+
+    width:100%;
+    height:80vh;
+    overflow-y: scroll;
+
+}
+
+#post_message_btn_container{
+
+    display:flex;
+    display:-webkit-flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    position: absolute;
+    bottom:45%;
+    left:100px;
+
+}
+
+#post_message_btn{
+
+    padding:15px;
+    background-color:#26ae60;
+    color:snow;
+    outline:none;
+    cursor:pointer;
+    border-radius:4px;
+
+
+}
+

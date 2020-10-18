@@ -1,0 +1,63 @@
+#username_input_section{
+
+
+    width:100%;
+    height:20vh;
+    display:flex;
+    display:-webkit-flex;
+    flex-direction:row;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    align-items: center;
+    background-color:rgba(211, 211, 211, 0.788);
+    animation:top_to_bottom 1s linear;
+
+
+}
+
+
+@keyframes top_to_bottom{
+
+    from{
+
+        margin-top:-20%;
+
+    }
+
+    to{
+
+        margin-top:0%;
+
+    }
+
+
+}
+
+
+#username{
+
+    width:45%;
+    padding:10px;
+    border-radius: 5px;
+
+}
+
+#username::placeholder{
+
+    padding:5px;
+
+}
+
+#login{
+
+    padding:10px;
+    background-color:rgba(39, 39, 180, 0.884);
+    color:snow;
+    border-radius: 4px;
+    outline:none;
+    cursor:pointer;
+
+
+}
+
+
