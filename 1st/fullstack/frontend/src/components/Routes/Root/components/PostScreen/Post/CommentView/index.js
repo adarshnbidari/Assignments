@@ -8,6 +8,8 @@ import DeleteNestedComments from './DeleteNestedComments';
 
 import EditNestedComments from './EditNestedComments';
 
+import moment from 'moment';
+
 import './css/index.css';
 
 const Comment = (props) => {
@@ -59,11 +61,22 @@ const Comment = (props) => {
 
             <div className="comment_section">
 
+
                 {
 
                     props.comment_data.post.post_message
 
                 }
+
+                &nbsp;  &nbsp;
+
+                {props.comment_data.username === props.username ? 'You' : props.comment_data.username}
+
+                    &nbsp; &#9755; &nbsp;
+
+                {moment(props.comment_data.post.datetime).calendar({ sameElse: "DD/MM/YYYY" })}
+
+
 
                 {
 
