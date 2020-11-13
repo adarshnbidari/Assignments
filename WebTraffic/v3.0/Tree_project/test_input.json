@@ -1,0 +1,14 @@
+{
+    "dim": [
+        {
+            "key": "country",
+            "val": "US"
+        }
+    ],
+    "metrics": [
+        {
+            "key": "webreq",
+            "val": 220
+        }
+    ]
+}
